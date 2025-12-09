@@ -23,7 +23,7 @@ async function seedUsers() {
         VALUES (${user.id}, ${user.name}, ${user.email}, ${hashedPassword})
         ON CONFLICT (id) DO NOTHING;
       `;
-    }),
+    })
   );
 
   return insertedUsers;
@@ -48,8 +48,8 @@ async function seedInvoices() {
         INSERT INTO invoices (customer_id, amount, status, date)
         VALUES (${invoice.customer_id}, ${invoice.amount}, ${invoice.status}, ${invoice.date})
         ON CONFLICT (id) DO NOTHING;
-      `,
-    ),
+      `
+    )
   );
 
   return insertedInvoices;
@@ -68,13 +68,14 @@ async function seedCustomers() {
   `;
 
   const insertedCustomers = await Promise.all(
-    customers.map(
-      (customer) => sql`
+    customers.map((customer) => {
+      console.log(`Inserting customer: ${customer.name}`);
+      return sql`
         INSERT INTO customers (id, name, email, image_url)
         VALUES (${customer.id}, ${customer.name}, ${customer.email}, ${customer.image_url})
         ON CONFLICT (id) DO NOTHING;
-      `,
-    ),
+      `;
+    })
   );
 
   return insertedCustomers;
@@ -89,13 +90,14 @@ async function seedRevenue() {
   `;
 
   const insertedRevenue = await Promise.all(
-    revenue.map(
-      (rev) => sql`
+    revenue.map((rev) => {
+      console.log(`Inserting revenue: ${rev.month}`);
+      return sql`
         INSERT INTO revenue (month, revenue)
         VALUES (${rev.month}, ${rev.revenue})
         ON CONFLICT (month) DO NOTHING;
-      `,
-    ),
+      `;
+    })
   );
 
   return insertedRevenue;
@@ -112,6 +114,8 @@ export async function GET() {
 
     return Response.json({ message: 'Database seeded successfully' });
   } catch (error) {
-    return Response.json({ error }, { status: 500 });
+    console.error('Seeding failed:', error);
+    const message = error instanceof Error ? error.message : String(error);
+    return Response.json({ error: message }, { status: 500 });
   }
 }

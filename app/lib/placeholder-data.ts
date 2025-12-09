@@ -144,4 +144,36 @@ const revenue = [
   { month: 'Dec', revenue: 4800 },
 ];
 
-export { users, customers, invoices, revenue };
+const languages = [
+  {
+    customer_id: customers[0].id,
+    preferred_language: 'English',
+    years_of_experience: '2 years',
+  },
+  {
+    customer_id: customers[1].id,
+    preferred_language: 'Spanish',
+    years_of_experience: '3 years',
+  },
+  {
+    customer_id: customers[2].id,
+    preferred_language: 'French',
+    years_of_experience: '4 years',
+  },
+  {
+    customer_id: customers[3].id,
+    preferred_language: 'German',
+    years_of_experience: '5 years',
+  },
+  {
+    customer_id: customers[4].id,
+    preferred_language: 'Italian',
+    years_of_experience: '6 years',
+  },
+  {
+    customer_id: customers[5].id,
+    preferred_language: 'Portuguese',
+    years_of_experience: '7 years',
+  },
+];
+export { users, customers, invoices, revenue, languages };
