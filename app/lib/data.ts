@@ -102,7 +102,8 @@ export async function fetchFilteredInvoices(
       ORDER BY invoices.date DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
-
+    console.log('The query was ', query);
+    console.log('The ouptut was ', invoices);
     return invoices;
   } catch (error) {
     console.error('Database Error:', error);
